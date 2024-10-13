@@ -2,7 +2,7 @@
 
 This repo is a collection of my learnings and experiments with Nuxt.
 
-- [Nuxt Learnings Repo](#nuxt-learnings-repo)
+- [Nuxt Learnings](#nuxt-learnings)
   - [📁 File based routing](#-file-based-routing)
   - [📃 Layouts](#-layouts)
   - [🖼 Assets \& Public Directories](#-assets--public-directories)
