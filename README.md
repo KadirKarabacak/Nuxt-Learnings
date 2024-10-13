@@ -2,13 +2,7 @@
 
 This repo is a collection of my learnings and experiments with Nuxt.
 
-## Creating & Deleting a branch
-
-- `git checkout -b new_branch_name` creates a branch and `git push origin new_branch_name` sends branch to the remote repository.
-- `git branch -d branch_name` deletes current branch and `git push origin --delete branch_name`. deletes the branch from the remote repository.
-
 - [Nuxt Learnings Repo](#nuxt-learnings-repo)
-  - [Creating a new Branch](#creating-a-new-branch)
   - [📁 File based routing](#-file-based-routing)
   - [📃 Layouts](#-layouts)
   - [🖼 Assets \& Public Directories](#-assets--public-directories)
@@ -27,6 +21,9 @@ This repo is a collection of my learnings and experiments with Nuxt.
   - [useLazyFetch](#uselazyfetch)
   - [useAsyncData](#useasyncdata)
   - [ℹ asyncData and fetch](#ℹ-asyncdata-and-fetch)
+  - [Lifecycle Hooks \[ Advanced \]](#lifecycle-hooks--advanced-)
+  - [Nuxt Content \[ Full Static Content \]](#nuxt-content--full-static-content-)
+  - [Creating \& Deleting a branch](#creating--deleting-a-branch)
 
 ## 📁 File based routing
 
@@ -380,3 +377,8 @@ Also there is built in hooks for certain situations. Checkout the <a href="https
 - Nuxt Content reads the `content/` directory in your project and parses `.md, .yml, .csv and .json` files to create a file-based CMS for your application. 
 - Nuxt content also allow us to write normal texts in markdown without configurate HTML, CSS or Javascript. Checkout the <a href="https://nuxt.com/docs/guide/directory-structure/content">documentation</a> for more information.
 - Also to able to use some `themes` in your Nuxt Content markdown you can check <a href="https://docus.dev/">Docus</a>.
+
+## Creating & Deleting a branch
+
+- `git checkout -b new_branch_name` creates a branch and `git push origin new_branch_name` sends branch to the remote repository.
+- `git branch -d branch_name` deletes current branch and `git push origin --delete branch_name`. deletes the branch from the remote repository.
