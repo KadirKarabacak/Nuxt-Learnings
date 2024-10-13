@@ -286,6 +286,8 @@ export default {
 };
 ```
 
+- Also we can configure some settings in `nuxt.config.ts` file, we can use `useHead()` composable in pages and we can use prebuilt components like `<Head />`, `<Title />` and more to define titles or meta tags about SEO. <a href="https://nuxt.com/docs/getting-started/seo-meta#components">Check out the documentation </a>
+
 ## 🔄 State Management
 
 Nuxt 3 a way to manage state management on globally accessible. This allow us to do not use any other state management library like Pinia. Pinia is what you get if you keep adding more and more features to `useState`. More complex apps will benefit from the extra features in Pinia, but useState is better for small and simple apss.
@@ -368,3 +370,13 @@ export default {
   },
 };
 ```
+
+## Lifecycle Hooks [ Advanced ]
+
+Also there is built in hooks for certain situations. Checkout the <a href="https://nuxt.com/docs/guide/going-further/hooks"> documentation </a> for more information.
+
+## Nuxt Content [ Full Static Content ]
+
+- Nuxt Content reads the `content/` directory in your project and parses `.md, .yml, .csv and .json` files to create a file-based CMS for your application. 
+- Nuxt content also allow us to write normal texts in markdown without configurate HTML, CSS or Javascript. Checkout the <a href="https://nuxt.com/docs/guide/directory-structure/content">documentation</a> for more information.
+- Also to able to use some `themes` in your Nuxt Content markdown you can check <a href="https://docus.dev/">Docus</a>.
