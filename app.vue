@@ -9,9 +9,6 @@
           <NuxtLink to="/events">Events</NuxtLink>
         </li>
       </ul> -->
-      <!-- <Profile />
-      <ProfileHeader />
-      <ProfileHeaderAvatar /> -->
       <NuxtPage />
     </NuxtLayout>
   </div>
