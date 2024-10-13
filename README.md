@@ -2,7 +2,13 @@
 
 This repo is a collection of my learnings and experiments with Nuxt.
 
+## Creating & Deleting a branch
+
+- `git checkout -b new_branch_name` creates a branch and `git push origin new_branch_name` sends branch to the remote repository.
+- `git branch -d branch_name` deletes current branch and `git push origin --delete branch_name`. deletes the branch from the remote repository.
+
 - [Nuxt Learnings Repo](#nuxt-learnings-repo)
+  - [Creating a new Branch](#creating-a-new-branch)
   - [📁 File based routing](#-file-based-routing)
   - [📃 Layouts](#-layouts)
   - [🖼 Assets \& Public Directories](#-assets--public-directories)
