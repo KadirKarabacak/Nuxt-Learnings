@@ -1,7 +1,9 @@
+<script setup lang="ts">
+import { useCounterStore } from '../stores/myStore';
+const store = useCounterStore()
+
+</script>
+
 <template>
-  <div>Main Page</div>
+  <Counter />
 </template>
-
-<script setup lang="ts"></script>
-
-<style scoped></style>
