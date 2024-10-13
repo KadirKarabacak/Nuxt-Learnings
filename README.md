@@ -15,6 +15,7 @@ This repo is a collection of my learnings and experiments with Nuxt.
   - [Modules](#modules)
   - [Meta Tags ( SEO )](#meta-tags--seo-)
   - [Async Data and Fetch](#async-data-and-fetch)
+  - [State Management](#state-management)
 
 ## File based routing
 
@@ -286,4 +287,13 @@ export default {
     return { product: data };
   },
 };
+```
+
+## State Management
+
+Nuxt 3 a way to manage state management on globally accessible. This allow us to do not use any other state management library like Pinia. Pinia is what you get if you keep adding more and more features to `useState`. More complex apps will benefit from the extra features in Pinia, but useState is better for small and simple apss.
+
+```ts
+// composables/states.ts
+export const useCounter = () => useState<number>('counter', () => 0)
 ```
