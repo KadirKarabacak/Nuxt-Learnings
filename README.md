@@ -1,4 +1,4 @@
-# Nuxt Learnings Repo
+# <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nuxtjs/nuxtjs-original.svg" width="40" />  Nuxt Learnings Repo
 
 This repo is a collection of my learnings and experiments with Nuxt.
 
@@ -212,7 +212,7 @@ export default defineNuxtPlugin(() => {
 
 This plugin can be used globally with `useNuxtApp().$axios`.
 
-## ♻ Composable Functions ( Like react custom hooks )
+## <img src="https://vueuse.org/favicon.svg" width="30" /> Composable Functions ( Like react custom hooks )
 
 Composable functions are used to encapsulate logic and share it across components. They are defined in the `composables` directory. This specially useful for reusable logic like API calls, state management, etc. They can be auto-imported by Nuxt. Following are some examples of what we can do with composable functions:
 
@@ -285,7 +285,7 @@ export default {
 
 - Also we can configure some settings in `nuxt.config.ts` file, we can use `useHead()` composable in pages and we can use prebuilt components like `<Head />`, `<Title />` and more to define titles or meta tags about SEO. <a href="https://nuxt.com/docs/getting-started/seo-meta#components">Check out the documentation </a>
 
-## 🔄 State Management
+## <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Pinialogo.svg" width="30" /> State Management
 
 Nuxt 3 a way to manage state management on globally accessible. This allow us to do not use any other state management library like Pinia. Pinia is what you get if you keep adding more and more features to `useState`. More complex apps will benefit from the extra features in Pinia, but useState is better for small and simple apss.
 
@@ -319,7 +319,7 @@ export default defineEventHandler(async (event) => {
 for best practice we must use suffix on our api routes to ensure the endpoint does which action.
 For example `hello.get.ts` or `hello.post.ts`. With this the hello endpoint does only get or post request.
 
-## Nitro
+## <img src="https://nitro.unjs.io/icon.svg" width="30" /> Nitro
 
 Nitro is an open source TypeScript framework to build ultra-fast web servers. Nuxt uses Nitro as its server engine.
 
