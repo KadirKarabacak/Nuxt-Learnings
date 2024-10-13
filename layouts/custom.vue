@@ -3,7 +3,7 @@
 <template>
   <div class="CustomLayout bg-stone-600 h-screen text-white">
     Custom Layout
-    <!-- Near layout we have to display pages with <slot /> -->
+    <!-- Inside layout we have to display pages with <slot /> -->
     <slot />
   </div>
 </template>
