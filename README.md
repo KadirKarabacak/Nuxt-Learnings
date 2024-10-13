@@ -7,15 +7,20 @@ This repo is a collection of my learnings and experiments with Nuxt.
   - [📃 Layouts](#-layouts)
   - [🖼 Assets \& Public Directories](#-assets--public-directories)
   - [🔐 Middleware ( Authentication, etc. )](#-middleware--authentication-etc-)
-  - [🌐 Server-Side Rendering (SSR) ve Static Site Generation (SSG)](#-server-side-rendering-ssr-ve-static-site-generation-ssg)
+  - [🌐 Server-Side Rendering (SSR) and Static Site Generation (SSG)](#-server-side-rendering-ssr-and-static-site-generation-ssg)
   - [🔗 Server Actions with API Routes (Serverless Functions)](#-server-actions-with-api-routes-serverless-functions)
   - [🗂 Project Structure with Nuxt.config.ts](#-project-structure-with-nuxtconfigts)
   - [🧩 Plugins](#-plugins)
   - [♻ Composable Functions ( Like react custom hooks )](#-composable-functions--like-react-custom-hooks-)
   - [🔀 Modules](#-modules)
   - [📰 Meta Tags ( SEO )](#-meta-tags--seo-)
-  - [ℹ Async Data and Fetch](#ℹ-async-data-and-fetch)
   - [🔄 State Management](#-state-management)
+  - [Server \& API endpoints \& Routes](#server--api-endpoints--routes)
+  - [Nitro](#nitro)
+  - [useFetch](#usefetch)
+  - [useLazyFetch](#uselazyfetch)
+  - [useAsyncData](#useasyncdata)
+  - [ℹ asyncData and fetch](#ℹ-asyncdata-and-fetch)
 
 ## 📁 File based routing
 
@@ -100,7 +105,7 @@ definePageMeta({
 });
 ```
 
-## 🌐 Server-Side Rendering (SSR) ve Static Site Generation (SSG)
+## 🌐 Server-Side Rendering (SSR) and Static Site Generation (SSG)
 
 Nuxt supports both SSR and SSG. SSR is the default mode and SSG is used to pre-render pages at build time.
 
@@ -275,7 +280,76 @@ export default {
 };
 ```
 
-## ℹ Async Data and Fetch
+## 🔄 State Management
+
+Nuxt 3 a way to manage state management on globally accessible. This allow us to do not use any other state management library like Pinia. Pinia is what you get if you keep adding more and more features to `useState`. More complex apps will benefit from the extra features in Pinia, but useState is better for small and simple apss.
+
+```ts
+// composables/states.ts
+export const useCounter = () => useState<number>('counter', () => 0)
+```
+
+## Server & API endpoints & Routes
+
+You can easily manage the server-only part of your Nuxt app, from API endpoints to middleware.
+
+Both endpoints and middleware can be defined like this:
+
+```ts
+// server/api/test.ts
+export default defineEventHandler(async (event) => {
+  // ... Do whatever you want here
+})
+
+```
+
+or we can also create `routes` folder without use /api prefix.
+
+```ts
+// server/routes/test.ts
+export default defineEventHandler(async (event) => {
+  // ... Do whatever you want here
+})
+```
+for best practice we must use suffix on our api routes to ensure the endpoint does which action.
+For example `hello.get.ts` or `hello.post.ts`. With this the hello endpoint does only get or post request.
+
+## Nitro
+
+Nitro is an open source TypeScript framework to build ultra-fast web servers. Nuxt uses Nitro as its server engine.
+
+## useFetch
+
+This composable provides a convenient wrapper around useAsyncData and $fetch. It automatically generates a key based on URL and fetch options, provides type hints for request url based on server routes, and infers API response type. It returns `data, status, error, refresh` and more which is very useful. But useFetch bloks ui until data is arrive. It could work both on SSR and CSR.
+
+```ts
+<script setup lang="ts">
+const { data, status, error, refresh, clear } = await useFetch('/api/modules', {
+  pick: ['title']
+})
+</script>
+```
+
+## useLazyFetch
+
+Same as `useFetch` but useful for displaying loaders while data is fetching. It could work both on SSR and CSR.
+
+## useAsyncData
+
+Within your pages, components, and plugins you can use useAsyncData to get access to data that resolves asynchronously.
+
+```ts
+// pages/index.vue
+<script setup lang="ts">
+const { data, status, error, refresh, clear } = await useAsyncData(
+  'mountains',
+  () => $fetch('https://api.nuxtjs.dev/mountains')
+)
+</script>
+```
+
+
+## ℹ asyncData and fetch
 
 Nuxt provides a way to handle async data with the `asyncData` method. It is used to fetch data from the server before rendering the page.
 
@@ -287,13 +361,4 @@ export default {
     return { product: data };
   },
 };
-```
-
-## 🔄 State Management
-
-Nuxt 3 a way to manage state management on globally accessible. This allow us to do not use any other state management library like Pinia. Pinia is what you get if you keep adding more and more features to `useState`. More complex apps will benefit from the extra features in Pinia, but useState is better for small and simple apss.
-
-```ts
-// composables/states.ts
-export const useCounter = () => useState<number>('counter', () => 0)
 ```
