@@ -3,18 +3,18 @@
 This repo is a collection of my learnings and experiments with Nuxt.
 
 - [Nuxt Learnings Repo](#nuxt-learnings-repo)
-  - [📁 File based routing](#-file-based-routing)
-  - [📃 Layouts](#-layouts)
-  - [🖼 Assets \& Public Directories](#-assets--public-directories)
-  - [🔐 Middleware ( Authentication, etc. )](#-middleware--authentication-etc-)
-  - [🌐 Server-Side Rendering (SSR) and Static Site Generation (SSG)](#-server-side-rendering-ssr-and-static-site-generation-ssg)
-  - [🔗 Server Actions with API Routes (Serverless Functions)](#-server-actions-with-api-routes-serverless-functions)
-  - [🗂 Project Structure with Nuxt.config.ts](#-project-structure-with-nuxtconfigts)
-  - [🧩 Plugins](#-plugins)
-  - [♻ Composable Functions ( Like react custom hooks )](#-composable-functions--like-react-custom-hooks-)
-  - [🔀 Modules](#-modules)
-  - [📰 Meta Tags ( SEO )](#-meta-tags--seo-)
-  - [🔄 State Management](#-state-management)
+  - [File based routing](#file-based-routing)
+  - [Layouts](#layouts)
+  - [Assets \& Public Directories](#assets--public-directories)
+  - [Middleware ( Authentication, etc. )](#middleware--authentication-etc-)
+  - [Server-Side Rendering (SSR) and Static Site Generation (SSG)](#server-side-rendering-ssr-and-static-site-generation-ssg)
+  - [Server Actions with API Routes (Serverless Functions)](#server-actions-with-api-routes-serverless-functions)
+  - [Project Structure with Nuxt.config.ts](#project-structure-with-nuxtconfigts)
+  - [Plugins](#plugins)
+  - [Composable Functions ( Like react custom hooks )](#composable-functions--like-react-custom-hooks-)
+  - [Modules](#modules)
+  - [Meta Tags ( SEO )](#meta-tags--seo-)
+  - [State Management](#state-management)
   - [Server \& API endpoints \& Routes](#server--api-endpoints--routes)
   - [Nitro](#nitro)
   - [useFetch](#usefetch)
@@ -25,7 +25,7 @@ This repo is a collection of my learnings and experiments with Nuxt.
   - [Nuxt Content \[ Full Static Content \]](#nuxt-content--full-static-content-)
   - [Creating \& Deleting a branch](#creating--deleting-a-branch)
 
-## 📁 File based routing
+## File based routing
 
 Nuxt uses the file system to generate routes. Every file in the `pages` directory will be used to generate a route.
 
@@ -36,7 +36,7 @@ pages/products/index.vue => /products
 pages/products/[id].vue => /products/:id
 ```
 
-## 📃 Layouts
+## Layouts
 
 Layouts are used to wrap pages with common UI components. They are defined in the `layouts` directory. We can create single Root Layout or multiple layouts.
 
@@ -55,7 +55,7 @@ definePageMeta({
 </script>
 ```
 
-## 🖼 Assets & Public Directories
+## Assets & Public Directories
 
 Assets and Public directories are used to store static files like images, fonts, etc.
 
@@ -63,7 +63,7 @@ Assets and Public directories are used to store static files like images, fonts,
 - Public directory is used to store and serve static files in public server. Files in this directory are not processed by webpack and are served as is. They are not cached by browser. Also they are available in the app.
 - If we want to use a svg file as a component, we can use <a href="https://icones.js.org/">Icones</a> library to create an icon component with that svg file.
 
-## 🔐 Middleware ( Authentication, etc. )
+## Middleware ( Authentication, etc. )
 
 Middleware are functions that run before a request is processed. They are defined in the `middleware` directory. It works before navigating to a particular route. There are three kinds of route middleware:
 
@@ -108,7 +108,7 @@ definePageMeta({
 });
 ```
 
-## 🌐 Server-Side Rendering (SSR) and Static Site Generation (SSG)
+## Server-Side Rendering (SSR) and Static Site Generation (SSG)
 
 Nuxt supports both SSR and SSG. SSR is the default mode and SSG is used to pre-render pages at build time.
 
@@ -120,7 +120,7 @@ export default defineNuxtConfig({
 });
 ```
 
-## 🔗 Server Actions with API Routes (Serverless Functions)
+## Server Actions with API Routes (Serverless Functions)
 
 Nuxt provides a way to handle server actions with API routes. API routes are defined in the `api` directory.
 
@@ -131,7 +131,7 @@ export default defineEventHandler(async (event) => {
 });
 ```
 
-## 🗂 Project Structure with Nuxt.config.ts
+## Project Structure with Nuxt.config.ts
 
 Nuxt.config.ts is the main configuration file for Nuxt. It is used to configure the project, plugins, middleware, etc.
 
@@ -189,7 +189,7 @@ export default defineNuxtConfig({
 });
 ```
 
-## 🧩 Plugins
+## Plugins
 
 Plugins are used to extend the functionality of Nuxt. They are defined in the `plugins` directory.
 
@@ -212,7 +212,7 @@ export default defineNuxtPlugin(() => {
 
 This plugin can be used globally with `useNuxtApp().$axios`.
 
-## ♻ Composable Functions ( Like react custom hooks )
+## Composable Functions ( Like react custom hooks )
 
 Composable functions are used to encapsulate logic and share it across components. They are defined in the `composables` directory. This specially useful for reusable logic like API calls, state management, etc. They can be auto-imported by Nuxt. Following are some examples of what we can do with composable functions:
 
@@ -256,7 +256,7 @@ export const useAuth = () => {
 };
 ```
 
-## 🔀 Modules
+## Modules
 
 Modules are used to extend the functionality and speed up the development process of Nuxt. They are defined in the `modules` directory.
 
@@ -266,7 +266,7 @@ Modules are used to extend the functionality and speed up the development proces
 - @nuxtjs/tailwindcss: Styling with Tailwind CSS.
 - @nuxt/image: Image optimization and lazy loading.
 
-## 📰 Meta Tags ( SEO )
+## Meta Tags ( SEO )
 
 Nuxt provides a way to handle meta tags with the `head` method.
 
@@ -285,7 +285,7 @@ export default {
 
 - Also we can configure some settings in `nuxt.config.ts` file, we can use `useHead()` composable in pages and we can use prebuilt components like `<Head />`, `<Title />` and more to define titles or meta tags about SEO. <a href="https://nuxt.com/docs/getting-started/seo-meta#components">Check out the documentation </a>
 
-## 🔄 State Management
+## State Management
 
 Nuxt 3 a way to manage state management on globally accessible. This allow us to do not use any other state management library like Pinia. Pinia is what you get if you keep adding more and more features to `useState`. More complex apps will benefit from the extra features in Pinia, but useState is better for small and simple apss.
 
