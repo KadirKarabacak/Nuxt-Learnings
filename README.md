@@ -5,6 +5,7 @@ This repo is a collection of my learnings and experiments with Nuxt.
 - [Nuxt Learnings Repo](#nuxt-learnings-repo)
   - [File based routing](#file-based-routing)
   - [Layouts](#layouts)
+  - [Assets \& Public Directories](#assets--public-directories)
   - [Middleware ( Authentication, etc. )](#middleware--authentication-etc-)
   - [Server-Side Rendering (SSR) ve Static Site Generation (SSG)](#server-side-rendering-ssr-ve-static-site-generation-ssg)
   - [Server Actions with API Routes (Serverless Functions)](#server-actions-with-api-routes-serverless-functions)
@@ -35,15 +36,37 @@ layouts/default.vue
 layouts/admin.vue
 ```
 
+If we want to use custom layout for a page, we can do that by adding layout property to the page.
+
+```ts
+<script setup>
+definePageMeta({
+  layout: 'name of layout',
+});
+</script>
+```
+
+## Assets & Public Directories
+
+Assets and Public directories are used to store static files like images, fonts, etc.
+
+- Assets are defined in the `assets` directory and preprocessed by webpack. They can be cached by browser.
+- Public directory is used to store and serve static files in public server. Files in this directory are not processed by webpack and are served as is. They are not cached by browser. Also they are available in the app.
+- If we want to use a svg file as a component, we can use <a href="https://icones.js.org/">Icones</a> library to create an icon component with that svg file.
+
 ## Middleware ( Authentication, etc. )
 
-Middleware are functions that run before a request is processed. They are defined in the `middleware` directory.
+Middleware are functions that run before a request is processed. They are defined in the `middleware` directory. It works before navigating to a particular route. There are three kinds of route middleware:
+
+- Anonymous middleware: Which are defined in the pages where they are used.
+- Named route middleware: Which are defined in the `middleware` directory.
+- Global middleware: Which are defined in the `nuxt.config.ts` file.
 
 ```ts
 // middleware/auth.ts
 export default function ({ store, redirect }) {
   if (!store.state.user) {
-    return redirect('/login');
+    return navigateTo('/login');
   }
 }
 ```
@@ -54,6 +77,25 @@ to use this middleware, we need to add it to the route in `nuxt.config.ts` file.
 // nuxt.config.ts
 export default defineNuxtConfig({
   middleware: ['auth'],
+});
+```
+
+Also we can define global middleware with the name of the file containing `.global` extension.
+
+```ts
+// middleware/auth.global.ts
+export default function ({ to, from }) {
+  if (!store.state.user) {
+    return navigateTo('/login');
+  }
+}
+```
+
+Or in any page we can use it like this:
+
+```ts
+definePageMeta({
+  middleware: 'auth',
 });
 ```
 
@@ -93,6 +135,48 @@ export default defineNuxtConfig({
   buildModules: ['@pinia/nuxt'],
   ssr: true,
   target: 'static',
+  // TypeScript configuration
+  typescript: {
+    strict: true, // Enables strict TypeScript checks
+    typeCheck: true, // Type errors will be checked at build time
+  },
+  // Runtime configuration
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.API_BASE || 'https://api.example.com',
+    },
+    secretKey: process.env.SECRET_KEY || 'default-secret', // Server-only secret
+  },
+  // PostCSS configuration
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
+  // Auto imports and Aliases
+  components: true,
+  alias: {
+    '@': '/<rootDir>/',
+    '@components': '/<rootDir>/components',
+    '@composables': '/<rootDir>/composables',
+  },
+  // Performance optimizations
+  build: {
+    extractCSS: true, // Extract CSS into separate files for better caching
+  },
+  render: {
+    http2: {
+      push: true,
+      pushAssets: (req, res, publicPath, preloadFiles) =>
+        preloadFiles
+          .filter((f) => f.asType === 'script' || f.asType === 'style')
+          .map((f) => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`),
+    },
+    static: {
+      maxAge: 60 * 60 * 24 * 365, // Cache static assets for one year
+    },
+  },
 });
 ```
 
@@ -121,13 +205,14 @@ This plugin can be used globally with `useNuxtApp().$axios`.
 
 ## Composable Functions ( Like react custom hooks )
 
-Composable functions are used to encapsulate logic and share it across components. They are defined in the `composables` directory. This specially useful for reusable logic like API calls, state management, etc. Following are some examples of what we can do with composable functions:
+Composable functions are used to encapsulate logic and share it across components. They are defined in the `composables` directory. This specially useful for reusable logic like API calls, state management, etc. They can be auto-imported by Nuxt. Following are some examples of what we can do with composable functions:
 
 - API requests
 - Local storage operations
 - User authentication processes
 - Theme and language change management
 - Global state management (without needing Vuex or Pinia for simple states)
+- Also there is a very useful library called <a href="https://vueuse.org/">VueUse</a> that provides a lot of composable functions for common tasks.
 
 Here is an example of a composable function that handles user authentication:
 
