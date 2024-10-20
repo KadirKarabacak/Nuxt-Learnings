@@ -382,3 +382,6 @@ Also there is built in hooks for certain situations. Checkout the <a href="https
 
 - `git checkout -b new_branch_name` creates a branch and `git push origin new_branch_name` sends branch to the remote repository.
 - `git branch -d branch_name` deletes current branch and `git push origin --delete branch_name`. deletes the branch from the remote repository.
+
+# Vue Learnings
+-
