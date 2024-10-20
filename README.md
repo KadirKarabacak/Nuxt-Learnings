@@ -24,6 +24,19 @@ This repo is a collection of my learnings and experiments with Nuxt.
   - [Lifecycle Hooks \[ Advanced \]](#lifecycle-hooks--advanced-)
   - [Nuxt Content \[ Full Static Content \]](#nuxt-content--full-static-content-)
   - [Creating \& Deleting a branch](#creating--deleting-a-branch)
+- [Vue Learnings](#vue-learnings)
+  - [API Styles](#api-styles)
+    - [Options API](#options-api)
+    - [Composition API](#composition-api)
+  - [Attribute Bindings](#attribute-bindings)
+    - [Dynamically Binding Multiple Attributes](#dynamically-binding-multiple-attributes)
+    - [Calling Functions in binding](#calling-functions-in-binding)
+  - [Directives](#directives)
+  - [Modifiers](#modifiers)
+  - [Declaring Reactive State](#declaring-reactive-state)
+    - [ref()](#ref)
+    - [reactive()](#reactive)
+  - [DOM Update Timing](#dom-update-timing)
 
 ## File based routing
 
@@ -383,4 +396,175 @@ Also there is built in hooks for certain situations. Checkout the <a href="https
 - `git branch -d branch_name` deletes current branch and `git push origin --delete branch_name`. deletes the branch from the remote repository.
 
 # Vue Learnings
--
+
+In this section I wrote what i learn about vue.js
+
+## API Styles
+
+There is two type of API styles in vue.js. First is the Options API (Old version of vue) and the second one is Composition API (New version of vue.js)
+
+### Options API
+
+With Options API, we define a component's logic using an object of options such as `data`, `methods`, and `mounted`. Properties defined by options are exposed on this inside functions, which points to the component instance:
+
+```ts
+<script>
+export default {
+  // Properties returned from data() become reactive state
+  // and will be exposed on `this`.
+  data() {
+    return {
+      count: 0
+    }
+  },
+
+  // Methods are functions that mutate state and trigger updates.
+  // They can be bound as event handlers in templates.
+  methods: {
+    increment() {
+      this.count++
+    }
+  },
+
+  // Lifecycle hooks are called at different stages
+  // of a component's lifecycle.
+  // This function will be called when the component is mounted.
+  mounted() {
+    console.log(`The initial count is ${this.count}.`)
+  }
+}
+</script>
+```
+### Composition API
+
+With Composition API, we define a component's logic using imported API functions. In SFCs, Composition API is typically used with `<script setup>`. The setup attribute is a hint that makes Vue perform compile-time transforms that allow us to use Composition API with less boilerplate. For example, imports and top-level variables / functions are directly usable in the template.
+
+```ts
+<script setup>
+import { ref, onMounted } from 'vue'
+
+// reactive state
+const count = ref(0)
+
+// functions that mutate state and trigger updates
+function increment() {
+  count.value++
+}
+
+// lifecycle hooks
+onMounted(() => {
+  console.log(`The initial count is ${count.value}.`)
+})
+</script>
+```
+
+## Attribute Bindings
+
+Attribute bindings are used to bind attributes to HTML elements. We can bind attributes with the `v-bind` directive or `:`.
+
+```ts
+// With the `v-bind` directive
+<div v-bind:id="dynamicId"></div>
+
+// Shorthand
+<div :id="id"></div>
+
+// Samename Shorthand
+<div :id></div>
+```
+
+### Dynamically Binding Multiple Attributes
+
+If we have a JavaScript object representing multiple attributes that looks like this:
+
+```ts
+const objectOfAttrs = {
+  id: 'container',
+  class: 'wrapper',
+  style: 'background-color:green'
+}
+
+<div v-bind="objectOfAttrs"></div>
+```
+
+### Calling Functions in binding
+
+It is possible to call a component-exposed method inside a binding expression:
+
+```ts
+<time :title="toTitleDate(date)" :datetime="date">
+  {{ formatDate(date) }}
+</time>
+```
+
+## Directives
+
+Directives are special attributes with the v- prefix. Vue provides a number of built-in directives, including v-html and v-bind which we have introduced above.
+
+Directive attribute values are expected to be single JavaScript expressions (with the exception of v-for, v-on and v-slot, which will be discussed in their respective sections later). A directive's job is to reactively apply updates to the DOM when the value of its expression changes. Take v-if as an example:
+
+```ts
+<p v-if="seen">Now you see me</p>
+```
+
+## Modifiers
+
+Modifiers are special postfixes denoted by a dot, which indicate that a directive should be bound in some special way. For example, the .prevent modifier tells the v-on directive to call event.preventDefault() on the triggered event:
+
+```ts
+<form @submit.prevent="onSubmit">...</form>
+```
+
+## Declaring Reactive State
+
+We can declare reactive state in two ways
+
+### ref()
+
+In Composition API, the recommended way to declare reactive state is using the ref() function. ref() takes the argument and returns it wrapped within a ref object with a `.value` property.
+
+```ts
+import { ref } from 'vue'
+
+const count = ref(0)
+console.log(count) // { value: 0 }
+console.log(count.value) // 0
+
+count.value++
+console.log(count.value) // 1
+```
+
+### reactive()
+
+There is another way to declare reactive state, with the reactive() API. Unlike a ref which wraps the inner value in a special object, reactive() makes an object itself reactive:
+
+```ts
+import { reactive } from 'vue'
+
+const state = reactive({ count: 0 })
+
+<button @click="state.count++">
+  {{ state.count }}
+</button>
+```
+
+Reactive has some limitations:
+- `Limited value types:` it only works for object types `(objects, arrays, and collection types such as Map and Set)`. It cannot hold primitive types such as `string, number or boolean`.
+- `Cannot replace entire object:` since Vue's reactivity tracking works over property access, we must always keep the same reference to the reactive object. This means we can't easily "replace" a reactive object because the reactivity connection to the first reference is lost.
+- `Not destructure-friendly:` when we destructure a reactive object's primitive type property into local variables, or when we pass that property into a function, we will lose the reactivity connection.
+
+## DOM Update Timing
+
+When you mutate reactive state, the DOM is updated automatically. However, it should be noted that the DOM updates are not applied synchronously. Instead, Vue buffers them until the "next tick" in the update cycle to ensure that each component updates only once no matter how many state changes you have made.
+
+To wait for the DOM update to complete after a state change, you can use the nextTick() global API:
+
+```ts
+import { nextTick } from 'vue'
+
+async function increment() {
+  count.value++
+  await nextTick()
+  // Now the DOM is updated
+}
+```
