@@ -1,8 +1,8 @@
-# <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nuxtjs/nuxtjs-original.svg" width="40" />  Nuxt Learnings
+# <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nuxtjs/nuxtjs-original.svg" width="40" /> Nuxt Learnings
 
 This repo is a collection of my learnings and experiments with Nuxt.
 
-- [  Nuxt Learnings](#--nuxt-learnings)
+- [ Nuxt Learnings](#-nuxt-learnings)
   - [File based routing](#file-based-routing)
   - [Layouts](#layouts)
   - [Assets \& Public Directories](#assets--public-directories)
@@ -93,9 +93,9 @@ Also we can define global middleware with the name of the file containing `.glob
 
 ```ts
 // middleware/auth.global.ts
-export default function ({ to, from }) {
+export default function ({ to, from }) {****
   if (!store.state.user) {
-    return navigateTo('/login');
+    return navigateTo('/login');****
   }
 }
 ```
@@ -291,7 +291,7 @@ Nuxt 3 a way to manage state management on globally accessible. This allow us to
 
 ```ts
 // composables/states.ts
-export const useCounter = () => useState<number>('counter', () => 0)
+export const useCounter = () => useState<number>('counter', () => 0);
 ```
 
 ## Server & API endpoints & Routes
@@ -304,8 +304,7 @@ Both endpoints and middleware can be defined like this:
 // server/api/test.ts
 export default defineEventHandler(async (event) => {
   // ... Do whatever you want here
-})
-
+});
 ```
 
 or we can also create `routes` folder without use /api prefix.
@@ -314,8 +313,9 @@ or we can also create `routes` folder without use /api prefix.
 // server/routes/test.ts
 export default defineEventHandler(async (event) => {
   // ... Do whatever you want here
-})
+});
 ```
+
 for best practice we must use suffix on our api routes to ensure the endpoint does which action.
 For example `hello.get.ts` or `hello.post.ts`. With this the hello endpoint does only get or post request.
 
@@ -353,7 +353,6 @@ const { data, status, error, refresh, clear } = await useAsyncData(
 </script>
 ```
 
-
 ## ℹ asyncData and fetch
 
 Nuxt provides a way to handle async data with the `asyncData` method. It is used to fetch data from the server before rendering the page.
@@ -374,7 +373,7 @@ Also there is built in hooks for certain situations. Checkout the <a href="https
 
 ## Nuxt Content [ Full Static Content ]
 
-- Nuxt Content reads the `content/` directory in your project and parses `.md, .yml, .csv and .json` files to create a file-based CMS for your application. 
+- Nuxt Content reads the `content/` directory in your project and parses `.md, .yml, .csv and .json` files to create a file-based CMS for your application.
 - Nuxt content also allow us to write normal texts in markdown without configurate HTML, CSS or Javascript. Checkout the <a href="https://nuxt.com/docs/guide/directory-structure/content">documentation</a> for more information.
 - Also to able to use some `themes` in your Nuxt Content markdown you can check <a href="https://docus.dev/">Docus</a>.
 
